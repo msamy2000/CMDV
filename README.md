@@ -97,32 +97,58 @@ Existing macOS clipboard apps often suffer from complex database engines, heavy 
 
 ---
 
-## 📦 Quick Installation & Build
+## 📦 Quick Installation & Getting Started
 
-### Requirements
-- macOS 14.0 (Sonoma) or higher (Apple Silicon / Intel)
-- Xcode Command Line Tools (`xcode-select --install`)
+Follow these simple steps to get **CMDV** up and running on your Mac in under a minute.
 
-### One-Command Build & Install
-Clone the repository and run the automated build script:
+### Step 1: Open Terminal
+Press <kbd>⌘ Cmd</kbd> + <kbd>Space</kbd> to open Spotlight, type `Terminal`, and hit <kbd>Enter ⏎</kbd>.
+
+### Step 2: Ensure Apple Developer Tools are Ready
+*(Skip this if you already have Git / Xcode CLI installed)*
+```bash
+xcode-select --install
+```
+*(If a prompt pops up, click **Install** to proceed. If it says it's already installed, continue to Step 3).*
+
+### Step 3: Run the One-Line Installer
+Copy, paste, and run this single command in Terminal:
 
 ```bash
-git clone https://github.com/msamy2000/CMDV.git
-cd CMDV
-chmod +x scripts/build_app.sh
-./scripts/build_app.sh
+git clone https://github.com/msamy2000/CMDV.git && cd CMDV && chmod +x scripts/build_app.sh && ./scripts/build_app.sh
 ```
 
-> **Note on Permissions**:
-> 1. **Accessibility Permission (Required for Auto-Paste)**: On first launch, macOS will ask for Accessibility permission so CMDV can paste directly where you type. If prompted, toggle **CMDV** to **ON** in `System Settings > Privacy & Security > Accessibility`.
-> 2. **Menu Bar App**: CMDV runs quietly in your macOS status bar menu as an embedded utility (no Dock icon). Look for the 📋 clipboard icon in your top menu bar.
+**What happens automatically:**
+1. Verifies the test suite (`swift run CMDVTestRunner`).
+2. Builds the release binary (`swift build -c release`).
+3. Assembles and ad-hoc signs `CMDV.app`.
+4. Installs it into `/Applications/CMDV.app` (or `~/Applications/` if non-admin).
+5. Configures automatic startup with macOS (`LaunchAtLogin`).
+6. **Launches the app immediately!**
 
-**What the build script does:**
-1. Runs full test suite (`swift run CMDVTestRunner`) — verifies 20-item cap, 5-day expiration, deduplication, and payload roundtrips.
-2. Compiles high-performance release binary (`swift build -c release`).
-3. Generates high-DPI `AppIcon.icns`.
-4. Assembles and ad-hoc codesigns `CMDV.app`.
-5. Installs `CMDV.app` to `/Applications/CMDV.app` (or `~/Applications/` if non-admin), configures `LaunchAtLogin`, and starts the app automatically.
+---
+
+### Step 4: Look for the 📋 Icon in Your Top Menu Bar
+> [!IMPORTANT]
+> **CMDV is an embedded menu bar utility (`LSUIElement = true`).**  
+> It will **not** open a standard window or show up in your Dock. Look at the **top-right menu bar** of your Mac for the **📋 clipboard icon**.
+
+---
+
+### Step 5: Grant Accessibility Permission (One-Time Setup)
+To enable **direct auto-paste** into active apps (just like Windows 11 `Win+V`), macOS requires Accessibility permission:
+1. When prompted on first launch (or open **Apple Menu  → System Settings → Privacy & Security → Accessibility**).
+2. Toggle **CMDV** to **ON (Blue)**.
+
+---
+
+### Step 6: Test It! 🎉
+1. Copy any text, code snippet, or image (<kbd>⌘ Cmd</kbd> + <kbd>C</kbd>).
+2. Press:
+   ### <kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>V</kbd>
+3. The clean card stack will pop up right at your text cursor!
+4. Press <kbd>Enter ⏎</kbd> (or <kbd>⌘1</kbd>–<kbd>⌘9</kbd>) to instantly auto-paste.
+5. **Left-click** the 📋 menu bar icon anytime to view cards; **Right-click** it to access options or Quit.
 
 ---
 
