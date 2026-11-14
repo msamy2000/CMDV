@@ -99,22 +99,28 @@ Existing macOS clipboard apps often suffer from complex database engines, heavy 
 
 ## 📦 Installation & Getting Started
 
+### System Compatibility
+- **Supported Versions**: macOS 14.0 (Sonoma), macOS 15.0 (Sequoia), and newer.
+- **Hardware Architecture**: Apple Silicon (M1 / M2 / M3 / M4 / Pro / Max / Ultra) & Intel 64-bit.
+
 Choose whichever installation method you prefer:
 
 ---
 
 ### Option A: Direct Download (No Terminal Required) ⬇️
 
-1. Download **[CMDV.dmg](https://github.com/msamy2000/CMDV/releases/latest/download/CMDV.dmg)** (or `.zip` from [Releases](https://github.com/msamy2000/CMDV/releases)).
+1. Download **[CMDV.dmg](https://github.com/msamy2000/CMDV/releases/latest/download/CMDV.dmg)** (or `CMDV.zip` from [GitHub Releases](https://github.com/msamy2000/CMDV/releases/latest)).
 2. Open `CMDV.dmg` and drag **CMDV** into your **Applications** folder.
 3. Open `CMDV.app`.
 
 > **Note on macOS Gatekeeper**:  
-> Since CMDV is an open-source project distributed directly without a paid Apple Developer certificate, on first launch macOS may show a warning. Simply **Right-click (or Control-click) `CMDV.app` → Click Open → Click Open** (or go to **System Settings > Privacy & Security** and click **Open Anyway**).
+> Since CMDV is an open-source project distributed directly without an Apple Developer paid membership, on first launch macOS may show an unnotarized app prompt. Simply **Right-click (or Control-click) `CMDV.app` → Click Open → Click Open** (or go to **System Settings > Privacy & Security** and click **Open Anyway**).
 
 ---
 
 ### Option B: Build from Source (Terminal) 🛠️
+
+Requirements: Xcode Command Line Tools (`xcode-select --install`).
 
 ```bash
 git clone https://github.com/msamy2000/CMDV.git && cd CMDV && chmod +x scripts/build_app.sh && ./scripts/build_app.sh
