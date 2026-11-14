@@ -109,15 +109,49 @@ Clone the repository and run the automated build script:
 ```bash
 git clone https://github.com/msamy2000/CMDV.git
 cd CMDV
+chmod +x scripts/build_app.sh
 ./scripts/build_app.sh
 ```
+
+> **Note on Permissions**:
+> 1. **Accessibility Permission (Required for Auto-Paste)**: On first launch, macOS will ask for Accessibility permission so CMDV can paste directly where you type. If prompted, toggle **CMDV** to **ON** in `System Settings > Privacy & Security > Accessibility`.
+> 2. **Menu Bar App**: CMDV runs quietly in your macOS status bar menu as an embedded utility (no Dock icon). Look for the 📋 clipboard icon in your top menu bar.
 
 **What the build script does:**
 1. Runs full test suite (`swift run CMDVTestRunner`) — verifies 20-item cap, 5-day expiration, deduplication, and payload roundtrips.
 2. Compiles high-performance release binary (`swift build -c release`).
 3. Generates high-DPI `AppIcon.icns`.
-4. Assembles and ad-hoc signs `CMDV.app`.
-5. Copies `CMDV.app` to `/Applications/CMDV.app` and configures `LaunchAtLogin`.
+4. Assembles and ad-hoc codesigns `CMDV.app`.
+5. Installs `CMDV.app` to `/Applications/CMDV.app` (or `~/Applications/` if non-admin), configures `LaunchAtLogin`, and starts the app automatically.
+
+---
+
+## 🛠️ Troubleshooting & FAQs
+
+### 1. I ran the script, but nothing opened on my screen?
+CMDV is an **embedded menu bar application** (`LSUIElement = true`). It does not open a standard window on launch or sit in your Dock.
+- Look at your **top macOS menu bar** for the 📋 clipboard icon.
+- Press **<kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>V</kbd>** anywhere to toggle your clipboard cards.
+- **Left-click** the menu bar icon to view clipboard history; **Right-click** it to toggle Launch at Login or Quit.
+
+### 2. Pressing `Enter` copies the text but doesn't paste automatically into my app?
+CMDV needs **macOS Accessibility permission** to simulate the `⌘V` paste keystroke.
+1. Open **System Settings** → **Privacy & Security** → **Accessibility**.
+2. Ensure **CMDV** is enabled.
+3. If it was already enabled before a rebuild, toggle it **Off and back On** so macOS registers the updated binary signature.
+
+### 3. `Permission denied` when running `./scripts/build_app.sh`?
+Ensure execute permissions are set:
+```bash
+chmod +x scripts/build_app.sh
+./scripts/build_app.sh
+```
+
+### 4. `xcrun: error: invalid active developer path`?
+Your Mac needs Apple's Command Line Tools installed. Run:
+```bash
+xcode-select --install
+```
 
 ---
 

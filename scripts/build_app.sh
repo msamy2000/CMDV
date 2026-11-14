@@ -40,8 +40,20 @@ codesign --force --deep --sign - "$APP_BUNDLE"
 
 echo "==> [6/6] Installing to /Applications/CMDV.app and configuring LaunchAgent..."
 pkill -x CMDV 2>/dev/null || true
-rm -rf "/Applications/CMDV.app"
-cp -R "$APP_BUNDLE" "/Applications/CMDV.app"
+
+TARGET_APP="/Applications/CMDV.app"
+USER_APP="$HOME/Applications/CMDV.app"
+
+# Copy to /Applications, falling back to ~/Applications if system /Applications is not writable
+if rm -rf "$TARGET_APP" 2>/dev/null && cp -R "$APP_BUNDLE" "$TARGET_APP" 2>/dev/null; then
+    INSTALLED_PATH="$TARGET_APP"
+else
+    echo "Notice: /Applications is write-protected without sudo. Installing into $USER_APP instead."
+    mkdir -p "$HOME/Applications"
+    rm -rf "$USER_APP"
+    cp -R "$APP_BUNDLE" "$USER_APP"
+    INSTALLED_PATH="$USER_APP"
+fi
 
 LAUNCH_AGENTS_DIR="$HOME/Library/LaunchAgents"
 mkdir -p "$LAUNCH_AGENTS_DIR"
@@ -56,7 +68,7 @@ cat > "$PLIST_PATH" <<EOF
     <string>com.cmdv.app</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/Applications/CMDV.app/Contents/MacOS/CMDV</string>
+        <string>$INSTALLED_PATH/Contents/MacOS/CMDV</string>
     </array>
     <key>RunAtLoad</key>
     <true/>
@@ -68,7 +80,10 @@ cat > "$PLIST_PATH" <<EOF
 </plist>
 EOF
 
+# Launch the app immediately for the user
+open "$INSTALLED_PATH" || true
+
 echo "==> Build & Installation complete:"
 echo "    Workspace bundle: $APP_BUNDLE"
-echo "    Installed bundle: /Applications/CMDV.app"
+echo "    Installed bundle: $INSTALLED_PATH"
 echo "    LaunchAgent:      $PLIST_PATH"
