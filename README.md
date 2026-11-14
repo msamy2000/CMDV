@@ -113,8 +113,15 @@ Choose whichever installation method you prefer:
 2. Open `CMDV.dmg` and drag **CMDV** into your **Applications** folder.
 3. Open `CMDV.app`.
 
-> **Note on macOS Gatekeeper**:  
-> Since CMDV is an open-source project distributed directly without an Apple Developer paid membership, on first launch macOS may show an unnotarized app prompt. Simply **Right-click (or Control-click) `CMDV.app` → Click Open → Click Open** (or go to **System Settings > Privacy & Security** and click **Open Anyway**).
+> [!NOTE]
+> **First Launch on macOS (Gatekeeper)**:  
+> Because CMDV is an open-source project distributed outside the Mac App Store without an Apple Developer paid subscription, macOS may show a *"CMDV Not Opened / Apple could not verify..."* warning on first launch:
+> 1. In that warning dialog, click **Done**.
+> 2. Open **System Settings** → **Privacy & Security**.
+> 3. Scroll down to the **Security** section.
+> 4. You will see: *"CMDV was blocked from use because it is not from an identified developer."*
+> 5. Click **Open Anyway** (and enter your Mac password / Touch ID).
+> *(You only ever need to do this once).*
 
 ---
 
